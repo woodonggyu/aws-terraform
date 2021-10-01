@@ -1,6 +1,6 @@
 # REQUIRED VARIABLES
 variable "cidr" {
-    type    = string
+    type = string
 }
 
 # OPTIONAL VARIABLES
