@@ -57,3 +57,28 @@ output "private_subnet_cidr_block" {
   description =  "The Private Subnet CIDR block of the VPC"
   value       = aws_subnet.main_private.*.cidr_block
 }
+
+output "internet_gateway_id" {
+  description =  "The Internet Gateway ID of the VPC"
+  value       = aws_internet_gateway.main_internet_gateway.id
+}
+
+output "public_route_table_id" {
+  description =  "The Public Route Table ID of the VPC"
+  value       = aws_route_table.main_public_route_table.id
+}
+
+output "public_route_table" {
+  description =  "The Public Route Table of the VPC"
+  value       = aws_route_table.main_public_route_table.route
+}
+
+output "private_route_table_id" {
+  description =  "The Private Route Table ID of the VPC"
+  value       = aws_route_table.main_private_route_table.id
+}
+
+output "private_route_table" {
+  description =  "The Private Route Table ID of the VPC"
+  value       = aws_route_table.main_private_route_table.route
+}
