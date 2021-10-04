@@ -1,12 +1,20 @@
 provider "aws" {
   region = var.region
+
+  default_tags {
+    tags = {
+      Environment = var.environment
+      Owner       = "Donggyu Woo"
+      Team        = "Security Engineering"
+    }
+  }
 }
 
 resource "aws_vpc" "main" {
   cidr_block  = var.vpc_cidr
 
-  tags        = {
-    Name      = "${var.vpc_name}.an2.vpc"
+  tags = {
+    "Name" = format("%s.an2.vpc", lower(var.environment))
   }
 }
 
@@ -17,8 +25,8 @@ resource "aws_subnet" "main_public" {
   cidr_block          = var.public_subnet_cidr[count.index]
   availability_zone   = var.availability_zone[count.index]
 
-  tags                = {
-    Name              = "${var.vpc_profile}.public-${substr("${var.availability_zone[count.index]}", -2, 2)}.subnet"
+  tags = {
+    "Name" = format("%s.public-%s.subnet", lower(var.environment), substr(var.availability_zone[count.index], -2, 2))
   }
 }
 
@@ -29,24 +37,24 @@ resource "aws_subnet" "main_private" {
   cidr_block          = var.private_subnet_cidr[count.index]
   availability_zone   = var.availability_zone[count.index]
 
-  tags                = {
-    Name              = "${var.vpc_profile}.private-${substr("${var.availability_zone[count.index]}", -2, 2)}.subnet"
+  tags = {
+    "Name" = format("%s.private-%s.subnet", lower(var.environment), substr(var.availability_zone[count.index], -2, 2))
   }
 }
 
 resource "aws_internet_gateway" "main_internet_gateway" {
-  vpc_id  = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
 
-  tags    = {
-    Name  = "${var.vpc_profile}.igw"
+  tags = {
+    "Name" = format("%s.igw", lower(var.environment))
   }
 }
 
 resource "aws_route_table" "main_public_route_table" {
   vpc_id  = aws_vpc.main.id
 
-  tags    = {
-    Name  = "${var.vpc_profile}-public.rt"
+  tags = {
+    "Name" = format("%s-public.rt", lower(var.environment))
   }
 }
 
@@ -59,8 +67,8 @@ resource "aws_route" "main_public_route" {
 resource "aws_route_table" "main_private_route_table" {
   vpc_id  = aws_vpc.main.id
 
-  tags    = {
-    Name  = "${var.vpc_profile}-private.rt"
+  tags = {
+    "Name" = format("%s-private.rt", lower(var.environment))
   }
 }
 

@@ -20,16 +20,12 @@ variable "availability_zone" {
 
 # OPTIONAL VARIABLES
 variable "region" {
-    default = "ap-northeast-2"
-    type    = string
-}
-
-variable "vpc_name" {
-    description = "The Name of the VPC"
+    description = "The Region of the VPC"
+    default     = "ap-northeast-2"
     type        = string
 }
 
-variable "vpc_profile" {
-    description = "The Profile of the VPC ['prod', 'dev', 'stage']"
+variable "environment" {
+    description = "The Profile of the VPC ['prod', 'dev', 'stage', 'test']"
     type        = string
 }
